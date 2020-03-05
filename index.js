@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-03-03 15:42:40
+ * Last modified  : 2020-03-05 17:24:23
  */
 
 class ZoomHover extends HTMLElement {
@@ -62,7 +62,7 @@ class ZoomHover extends HTMLElement {
             ? (figure.style.height = `${this.getAttribute("height")}px`)
             : (figure.style.height = this.height);
         if (this.hasAttribute("image")) {
-            const imgAttr = this.getAttribute("image");
+            const imgAttr = encodeURI(decodeURI(this.getAttribute("image")));
             this.backgroundImage = `url(${encodeURI(imgAttr)})`;
             image.src = encodeURI(imgAttr);
             const oldFigr = this.root.querySelector('figure');
