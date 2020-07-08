@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-07-08 16:08:00
+ * Last modified  : 2020-07-08 16:40:14
  */
 
 class ZoomHover extends HTMLElement {
@@ -23,8 +23,6 @@ class ZoomHover extends HTMLElement {
                          }
                 .zoom-img:hover img {
                         opacity: 0;
-                        
-                        display:none;
                     }
 
                     .cursor-zoom{
@@ -38,7 +36,6 @@ class ZoomHover extends HTMLElement {
                 .tumb img {
                         max-width: 100%;
                         max-height: 100%;
-                        display:block;
                         pointer-events:none;
                     }
              </style>
