@@ -1,6 +1,6 @@
 {
   "name": "zoomify-img",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "Image zoom on Hover",
   "main": "index.js",
   "scripts": {
