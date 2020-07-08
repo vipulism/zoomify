@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-03-05 17:24:23
+ * Last modified  : 2020-07-08 13:09:43
  */
 
 class ZoomHover extends HTMLElement {
@@ -18,7 +18,7 @@ class ZoomHover extends HTMLElement {
                 .zoom-img {
                           background-repeat: no-repeat;
                           margin:0;
-                         
+                          display:flex;
                          }
                 .zoom-img:hover img {
                         opacity: 0;
