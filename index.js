@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-07-08 16:40:14
+ * Last modified  : 2020-07-08 16:59:31
  */
 
 class ZoomHover extends HTMLElement {
@@ -22,7 +22,7 @@ class ZoomHover extends HTMLElement {
                           display:flex;
                          }
                 .zoom-img:hover img {
-                        opacity: 0;
+                        /* opacity: 0; */
                     }
 
                     .cursor-zoom{
