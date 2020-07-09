@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-07-08 18:34:47
+ * Last modified  : 2020-07-09 21:55:29
  */
 
 class ZoomHover extends HTMLElement {
@@ -16,6 +16,9 @@ class ZoomHover extends HTMLElement {
         this.root.innerHTML = `
         <template id='zoom-template'>
             <style>
+            #zoom-template{
+                position:relative;
+            }
                 .zoom-img {
                           background-repeat: no-repeat;
                           margin:0;
@@ -36,20 +39,35 @@ class ZoomHover extends HTMLElement {
                 .tumb img {
                         max-width: 100%;
                         max-height: 100%;
-                        pointer-events:none;
+                        cursor: zoom-in;
                     }
-             </style>
+
+                .zoomed{
+                    left:100%;
+                    top:0px;
+                    position:absolute;
+                    border:5px solid #ccc;
+                    background-repeat: no-repeat;
+                    background-color:#ccc;
+                    display:none;
+                }
                 
+             </style>
+                  
              <figure class="tumb zoom-img">
                <img src='' alt="not found" />
             </figure>
+            <div class="zoomed"></div>
+
     </template>`;
 
         this.backgroundImage = "";
         this.backgroundPosition = "0% 0%";
         this.height = "400px";
+        this.width = "400px";
         this.disabled = false;
         this.image = ''
+        this.zoomedImg = null;
     }
 
     static get observedAttributes() {
@@ -64,16 +82,24 @@ class ZoomHover extends HTMLElement {
             .querySelector("#zoom-template")
             .content.cloneNode(true);
         const image = content.querySelector("img");
-        const figure = content.querySelector("figure");
+        const figure = content.querySelector("figure.tumb");
 
-        this.hasAttribute("height")
-            ? (figure.style.height = `${this.getAttribute("height")}px`)
-            : (figure.style.height = this.height);
+        this.zoomedImg = content.querySelector(".zoomed");;
+
+        if (this.hasAttribute("height")) {
+            figure.style.height = `${this.getAttribute("height")}px`;
+            this.zoomedImg.style.height = '500px'; //`${this.getAttribute("height")}px`;
+            content.height = `$ {this.getAttribute("height")}px`;
+
+        }
+
+        if (this.hasAttribute("width")) {
+            figure.style.width = `${this.getAttribute("width")}px`;
+            this.zoomedImg.style.width = '500px'; // `${this.getAttribute("width")}px`;
+            content.width = `${this.getAttribute("width")}px`;
+        }
 
 
-        this.hasAttribute("width")
-            ? (figure.style.width = `${this.getAttribute("width")}px`)
-            : (figure.style.width = this.width);
 
         if (this.hasAttribute("zoomimg")) {
             const imgUrl = encodeURI(decodeURI(this.getAttribute("zoomimg")));
@@ -87,45 +113,68 @@ class ZoomHover extends HTMLElement {
 
             this.image = imgAttr;
             image.src = imgAttr;
+
+
             const oldFigr = this.root.querySelector('figure');
+            const oldZoomedImg = this.root.querySelector('.zoomed');
+
             if (oldFigr) {
                 this.root.removeChild(oldFigr);
             }
+            if (oldZoomedImg) {
+                this.root.removeChild(oldZoomedImg);
+            }
             this.root.appendChild(content);
-
-
-
+            this.zoomedImg = this.root.querySelector('.zoomed');
         }
 
         if (this.backgroundImage && !this.disabled) {
-            this.addListener(figure);
+            this.addListener(image);
         } else if (this.disabled) {
-            this.removeListener(figure);
+            this.removeListener(image);
         }
 
 
     }
 
     handleMouseMove(e) {
+
+
         const { left, top, width, height } = e.target.getBoundingClientRect();
 
         const x = ((e.pageX - left) / width) * 100;
         const y = ((e.pageY - top) / height) * 100;
+
         this.backgroundPosition = `${x}% ${y}%`;
-        e.target.classList = e.target.classList + ' cursor-zoom';
-        e.target.style.backgroundImage = this.backgroundImage;
-        e.target.style.backgroundPosition = this.backgroundPosition;
-        e.target.innerHTML = ''
+        // e.target.classList = e.target.classList + ' cursor-zoom';
+        // e.target.style.backgroundImage = this.backgroundImage;
+        // e.target.style.backgroundPosition = this.backgroundPosition;
+        // e.target.innerHTML = '';
+        //  const zoomed = document.createElement('div')
+        //   this.zoomedImg = zoomed;
+
+
+
+        this.zoomedImg.style.display = 'block';
+        this.zoomedImg.style.backgroundImage = this.backgroundImage;
+        this.zoomedImg.style.backgroundPosition = this.backgroundPosition;
+
     }
 
     handleMouseOut(e) {
         e.target.classList = 'zoom-img tumb';
-        const img = document.createElement('img')
-        img.src = encodeURI(this.image);
-        e.target.appendChild(img)
+        // const img = document.createElement('img')
+        // img.src = encodeURI(this.image);
+        // e.target.appendChild(img)
         this.backgroundPosition = "0% 0%";
         e.target.style.backgroundImage = "";
         e.target.style.backgroundPosition = "0% 0%";
+
+        this.zoomedImg.style.display = 'none';
+        this.zoomedImg.style.backgroundImage = "";
+        this.zoomedImg.style.backgroundPosition = "0% 0%";
+
+
     }
 
 
@@ -140,6 +189,7 @@ class ZoomHover extends HTMLElement {
         figure.removeEventListener('mousemove', this.handleMouseMove)
         figure.removeEventListener("mouseout", this.handleMouseOut);
     }
+
 }
 
 customElements.define("zoom-hover", ZoomHover);
