@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-07-09 21:55:29
+ * Last modified  : 2020-07-10 15:03:46
  */
 
 class ZoomHover extends HTMLElement {
@@ -87,14 +87,14 @@ class ZoomHover extends HTMLElement {
         this.zoomedImg = content.querySelector(".zoomed");;
 
         if (this.hasAttribute("height")) {
-            figure.style.height = `${this.getAttribute("height")}px`;
+            figure.style.maxHheight = `${this.getAttribute("height")}px`;
             this.zoomedImg.style.height = '500px'; //`${this.getAttribute("height")}px`;
             content.height = `$ {this.getAttribute("height")}px`;
 
         }
 
         if (this.hasAttribute("width")) {
-            figure.style.width = `${this.getAttribute("width")}px`;
+            figure.style.maxWidth = `${this.getAttribute("width")}px`;
             this.zoomedImg.style.width = '500px'; // `${this.getAttribute("width")}px`;
             content.width = `${this.getAttribute("width")}px`;
         }
