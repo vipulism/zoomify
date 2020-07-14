@@ -5,7 +5,7 @@
  * @author Vipul Sharma <vipul0809@gmail.com>
  * 
  * Created at     : 2020-03-03 15:33:08 
- * Last modified  : 2020-07-10 15:03:46
+ * Last modified  : 2020-07-14 17:05:57
  */
 
 class ZoomHover extends HTMLElement {
@@ -39,7 +39,6 @@ class ZoomHover extends HTMLElement {
                 .tumb img {
                         max-width: 100%;
                         max-height: 100%;
-                        cursor: zoom-in;
                     }
 
                 .zoomed{
@@ -154,7 +153,7 @@ class ZoomHover extends HTMLElement {
         //   this.zoomedImg = zoomed;
 
 
-
+        e.target.classList = "cursor-zoom zoom-img tumb"
         this.zoomedImg.style.display = 'block';
         this.zoomedImg.style.backgroundImage = this.backgroundImage;
         this.zoomedImg.style.backgroundPosition = this.backgroundPosition;
